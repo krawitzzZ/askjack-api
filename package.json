@@ -9,8 +9,7 @@
     "dbdown": "./node_modules/.bin/better-npm-run db-migrate-rollback",
     "dbseed": "./node_modules/.bin/better-npm-run db-seed-run",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "dev": "./node_modules/.bin/better-npm-run dev",
-    "postinstall": "npm run dbup"
+    "dev": "./node_modules/.bin/better-npm-run dev"
   },
   "betterScripts": {
     "start": {
