@@ -6,8 +6,8 @@ const UserRoles = require('./app/enums').UserRoles;
 const QuoteStatuses = require('./app/enums').QuoteStatuses;
 
 // routes
-const users = require('./routers/users');
 const auth = require('./routers/auth');
+const users = require('./routers/users');
 const quotes = require('./routers/quotes');
 
 const app = express();
@@ -17,11 +17,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   expressValidator({
     customValidators: {
-      publicRole(value) {
+      publicRoles(value) {
         return !!UserRoles[value];
       },
       quoteStatuses(value) {
         return !!QuoteStatuses[value];
+      },
+    },
+    customSanitizers: {
+      toUpperCase(value) {
+        return value.toString().toUpperCase();
       },
     },
   })

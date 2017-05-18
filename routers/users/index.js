@@ -4,13 +4,12 @@ const checkTokenMiddleware = require('../../middleware').checkTokenMiddleware;
 const logger = require('log4js').getLogger('[Users]');
 
 router.post('/', (req, res, next) => {
-  logger.info('Creating new user');
-
+  req.sanitizeBody('role').toUpperCase();
   req.assert('name', 'name is require').notEmpty();
   req.assert('email', 'email is require').notEmpty();
   req.assert('email', 'valid email required').isEmail();
   req.assert('password', 'more then 6 characters required').len(6);
-  req.assert('role', 'only create CONSUMER or CONTRACTOR is allowed').publicRole();
+  req.assert('role', 'only create CONSUMER or CONTRACTOR is allowed').publicRoles();
 
   req
     .getValidationResult()

@@ -1,4 +1,5 @@
-const Knex = require('knex'), Bookshelf = require('bookshelf');
+const Knex = require('knex');
+const Bookshelf = require('bookshelf');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const knexConfiguration = require('../knexfile')[nodeEnv];

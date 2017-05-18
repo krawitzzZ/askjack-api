@@ -7,34 +7,30 @@ const logger = require('log4js').getLogger('[Quotes]');
 router.use(checkTokenMiddleware);
 
 router.post('/', (req, res, next) => {
-  logger.info('Creating new quote');
-
   req.assert('name', 'name is require').notEmpty();
-  req.assert('labour', 'email is require').notEmpty();
-  req.assert('expenses', 'email is require').notEmpty();
-  req.assert('sales_tax', 'email is require').notEmpty();
-  req.assert('miscellaneous', 'email is require').notEmpty();
+  req.assert('labour', 'labour is require').notEmpty();
+  req.assert('expenses', 'expenses is require').notEmpty();
+  req.assert('sales_tax', 'sales_tax is require').notEmpty();
+  req.assert('miscellaneous', 'miscellaneous is require').notEmpty();
 
   req
     .getValidationResult()
     .then(result => {
       if (!result.isEmpty()) {
-        throw new Error('There have been validation errors', {
-          errors: result.array(),
-        });
+        throw new Error('There have been validation errors', { errors: result.array() });
       }
 
-      const userData = req.body;
-      userData.created_by = req.decoded.attributes.id;
+      const quoteData = req.body;
+      quoteData.created_by = req.decoded.attributes.id;
 
-      return new Quote(userData).save();
+      return new Quote(quoteData).save();
     })
     .then(quoteModel => {
-      logger.info('New User is created', quoteModel.get('id'));
-      res.sendStatus(200);
+      logger.info('New Quote is created with id: ', quoteModel.get('id'));
+      res.status(201).json({ quote: quoteModel });
     })
     .catch(err => {
-      logger.error('Create new User error: \n', err);
+      logger.error('Create new Quote error: \n', err);
       next(err);
     });
 });
@@ -47,19 +43,18 @@ router.post('/offer', (req, res, next) => {
     .getValidationResult()
     .then(result => {
       if (!result.isEmpty()) {
-        throw new Error('There have been validation errors', {
-          errors: result.array(),
-        });
+        throw new Error('There have been validation errors', { errors: result.array() });
       }
 
-      Promise.all([
-        new Quote({ id: req.body.quote_id }).users().attach({
+      new Quote({ id: req.body.quote_id })
+        .users()
+        .attach({
           user_id: req.body.user_id,
           created_at: new Date(),
-        }),
-      ]).then(reslt => {
-        res.json(reslt);
-      });
+        })
+        .then(reslt => {
+          res.json(reslt);
+        });
     })
     .catch(err => {
       logger.error('Create new User error: \n', err);
@@ -71,26 +66,26 @@ router.post('/offer', (req, res, next) => {
 router.get('/offered', (req, res) => {
   const userId = req.decoded.attributes.id;
   new User({ id: userId }).quotes().fetch().then(result => {
-    res.json(result);
+    res.json(result || []);
   });
 });
 
 // I offered
 router.get('/offers', (req, res) => {
   const userId = req.decoded.attributes.id;
-  const status = req.query.status.toUpperCase();
+  const status = req.query.status ? req.query.status.toUpperCase() : null;
   new Quote({ created_by: userId })
     .fetch({
       withRelated: [
         {
           users(qb) {
-            return qb.where('status', status || null);
+            return qb.where('status', status || null); // all statuses instead of one
           },
         },
       ],
     })
     .then(result => {
-      res.json(result);
+      res.json(result || []);
     });
 });
 
