@@ -1,7 +1,5 @@
+const mailerConfig = require('./mailerConfig');
+
 module.exports = {
-    transportConfig : {
-        development: {
-            jsonTransport: true
-        },
-    }
+  transportConfig: mailerConfig,
 };

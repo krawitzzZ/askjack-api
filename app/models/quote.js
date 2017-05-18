@@ -1,4 +1,3 @@
-'use strict';
 /*
  {
  'id':                  'bigIncrements',
@@ -12,21 +11,20 @@
  }
  */
 
-
-var bookshelf = require('../bookshelf');
+const bookshelf = require('../bookshelf');
 require('./user');
 
-var Quote = bookshelf.Model.extend({
-    tableName: 'quotes',
-    hasTimestamps: ['created_at', 'updated_at'],
-    hidden: ['created_at', 'updated_at'],
-    users: function() {
-        return this.belongsToMany('User').withPivot(['created_at', 'status']);
-    }
+const Quote = bookshelf.Model.extend({
+  tableName: 'quotes',
+  hasTimestamps: ['created_at', 'updated_at'],
+  hidden: ['created_at', 'updated_at'],
+  users: function() {
+    return this.belongsToMany('User').withPivot(['created_at', 'status']);
+  },
 });
 
-var Quotes = bookshelf.Collection.extend({
-    model: Quote
+const Quotes = bookshelf.Collection.extend({
+  model: Quote,
 });
 
 exports.Quote = bookshelf.model('Quote', Quote);

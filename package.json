@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "better-npm-run start",
-    "dbup": "better-npm-run db-migrate-latest",
-    "dbdown": "better-npm-run db-migrate-rollback",
-    "dbseed": "better-npm-run db-seed-run",
+    "start": "./node_modules/.bin/better-npm-run start",
+    "dbup": "./node_modules/.bin/better-npm-run db-migrate-latest",
+    "dbdown": "./node_modules/.bin/better-npm-run db-migrate-rollback",
+    "dbseed": "./node_modules/.bin/better-npm-run db-seed-run",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "dev": "better-npm-run dev",
+    "dev": "./node_modules/.bin/better-npm-run dev",
     "postinstall": "npm run dbup"
   },
   "betterScripts": {
@@ -17,16 +17,16 @@
       "command": "node ./bin/www"
     },
     "dev": {
-      "command": "nodemon --delay 5 ./bin/www"
+      "command": "./node_modules/.bin/nodemon --delay 1 ./bin/www"
     },
     "db-migrate-latest": {
-      "command": "knex migrate:latest"
+      "command": "./node_modules/.bin/knex migrate:latest"
     },
     "db-migrate-rollback": {
-      "command": "knex migrate:rollback"
+      "command": "./node_modules/.bin/knex migrate:rollback"
     },
     "db-seed-run": {
-      "command": "knex seed:run"
+      "command": "./node_modules/.bin/knex seed:run"
     }
   },
   "author": "",

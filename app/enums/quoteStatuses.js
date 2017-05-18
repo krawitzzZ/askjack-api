@@ -1,4 +1,4 @@
 module.exports = {
-    ACCEPTED: true,
-    REJECTED: true,
+  ACCEPTED: true,
+  REJECTED: true,
 };

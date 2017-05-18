@@ -1,14 +1,11 @@
-'use strict';
+const Knex = require('knex'), Bookshelf = require('bookshelf');
 
-var Knex = require('knex')
-  , Bookshelf = require('bookshelf');
+const nodeEnv = process.env.NODE_ENV || 'development';
+const knexConfiguration = require('../knexfile')[nodeEnv];
 
-var nodeEnv = process.env.NODE_ENV || 'development';
-var knexConfiguration = require('../knexfile')[nodeEnv];
+const knex = Knex(knexConfiguration);
 
-var knex = Knex(knexConfiguration);
-
-var bookshelf = Bookshelf(knex);
+const bookshelf = Bookshelf(knex);
 bookshelf.plugin('registry');
 bookshelf.plugin('visibility');
 

@@ -1,5 +1,5 @@
-var checkTokenMiddleware = require('./checktoken');
+const checkTokenMiddleware = require('./checktoken');
 
 module.exports = {
-    checkTokenMiddleware: checkTokenMiddleware
+  checkTokenMiddleware,
 };

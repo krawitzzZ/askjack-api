@@ -1,17 +1,13 @@
-var nodemailer = require('nodemailer');
-var mandrillTransport = require('nodemailer-mandrill-transport');
-var config = require('../../config').transportConfig;
+const nodemailer = require('nodemailer');
+const config = require('../../config').transportConfig;
 
-var env = process.env.NODE_ENV || 'development';
-var apiKey = process.env.MANDRILL_API_KEY;
-
-var transporter = nodemailer.createTransport(config[env]);
+const env = process.env.NODE_ENV || 'development';
+const transporter = nodemailer.createTransport(config[env]);
 
 module.exports = {
-    sendMail: function sendMail (options) {
-        transporter.sendMail(options, function(err, info) {
-            console.log(info.envelope);
-            console.log(info.messageId);
-            console.log(info.message);
-        })}
+  sendMail(options) {
+    transporter.sendMail(options, (err, info) => {
+      console.log('Email sent. ', info.message);
+    });
+  },
 };
