@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run dbup && npm run dbseed",
     "start": "./node_modules/.bin/better-npm-run start",
     "dbup": "./node_modules/.bin/better-npm-run db-migrate-latest",
     "dbdown": "./node_modules/.bin/better-npm-run db-migrate-rollback",
     "dbseed": "./node_modules/.bin/better-npm-run db-seed-run",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "./node_modules/.bin/better-npm-run test",
     "dev": "./node_modules/.bin/better-npm-run dev"
   },
   "betterScripts": {
@@ -17,6 +18,9 @@
     },
     "dev": {
       "command": "./node_modules/.bin/nodemon ./bin/www"
+    },
+    "test": {
+      "command": "npm run dbup && npm run dbseed && ./node_modules/.bin/ava --verbose --timeout=5s"
     },
     "db-migrate-latest": {
       "command": "./node_modules/.bin/knex migrate:latest"
@@ -44,8 +48,13 @@
     "log4js": "^1.1.1",
     "nodemailer": "^4.0.1",
     "nodemailer-mandrill-transport": "^1.2.0",
-    "nodemailer-trap-plugin": "^1.0.2",
+    "pg": "^6.2.2",
+    "rimraf": "^2.6.1"
+  },
+  "devDependencies": {
     "nodemon": "^1.11.0",
-    "pg": "^6.2.2"
+    "ava": "^0.19.1",
+    "sinon": "^2.2.0",
+    "supertest": "^3.0.0"
   }
 }

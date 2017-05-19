@@ -4,7 +4,7 @@ module.exports = {
     connection: process.env.DATABASE_URL || {
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'killmenot',
+      password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'askjack',
     },
     pool: {
@@ -42,7 +42,7 @@ module.exports = {
     connection: process.env.DATABASE_URL || {
       host: 'localhost',
       user: 'postgres',
-      password: 'postgres',
+      password: '',
       database: 'askjack',
     },
     pool: {
