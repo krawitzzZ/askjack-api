@@ -1,6 +1,6 @@
 const test = require('ava');
 
-test.cb('Should correctly create a new user: POST - /v1/users', t => {
+test('Should correctly create a new user: POST - /v1/users', t => {
   t.pass();
 });
 
