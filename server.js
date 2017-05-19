@@ -45,11 +45,16 @@ app.use(`${apiVersion}/users`, users);
 app.use(`${apiVersion}/auth`, auth);
 app.use(`${apiVersion}/quotes`, quotes);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use((error, req, res, next) => {
+  if (process.env.NODE_ENV === 'development') {
+    return res.status(error.status || 500).json(error);
+  }
+
+  return res.status(error.status || 500).json({ status: 'error', message: error.detail });
+});
+
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not Found' });
 });
 
 module.exports = app;

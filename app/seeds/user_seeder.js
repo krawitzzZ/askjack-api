@@ -4,18 +4,18 @@ exports.seed = (knex, Promise) =>
   knex('users').del().then(() => {
     return knex('users').insert([
       {
-        name: 'dima',
-        email: 'dmitry@intspirit.com',
-        address: 'taganrog',
+        name: 'Contractor',
+        email: 'contractor@test.com',
+        address: 'New York',
         password: bcrypt.hashSync('foobar', 10),
         role: 'CONTRACTOR',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        name: 'nikita',
-        email: 'nikita@intspirit.com',
-        address: 'taganrog',
+        name: 'Consumer',
+        email: 'consumer@test.com',
+        address: 'Toronto',
         password: bcrypt.hashSync('foobar', 10),
         role: 'CONSUMER',
         created_at: new Date(),

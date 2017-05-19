@@ -5,6 +5,18 @@ const logger = require('log4js').getLogger('[Auth]');
 const jwt = require('jsonwebtoken');
 const mailService = require('../../app/services').mailService;
 
+/**
+ * Register new user
+ * @method POST
+ * @param {object} body - new user data
+ * @param {string} body.name - required
+ * @param {string} body.email - required
+ * @param {string} body.password - required
+ * @param {string: enumerable of CONSUMER/CONTRACTOR} body.role - required
+ * @param {string} body.address - optional
+ *
+ * @return {object} registered user, access-token for authentication
+ */
 router.post('/register', (req, res, next) => {
   req.sanitizeBody('role').toUpperCase();
   req.assert('name', 'name is require').notEmpty();
@@ -46,6 +58,15 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+/**
+ * Login. Get access-token
+ * @method POST
+ * @param {object} body - data for login user
+ * @param {string} body.email - required
+ * @param {string} body.password - required
+ *
+ * @return {object} access-token for authentication
+ */
 router.post('/login', (req, res, next) => {
   req.assert('email', 'email is require').notEmpty();
   req.assert('email', 'valid email required').isEmail();
